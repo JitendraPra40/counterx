@@ -78,6 +78,20 @@ public class InventoryController {
         );
     }
 
+    @GetMapping("/{batchNumber}")
+    @Operation(summary = "get the items by batchNumber")
+    public ResponseEntity<ApiResponse<InventoryResponseDto>> getInventoryByBatch(
+            @PathVariable String batchNumber){
+        return ResponseEntity.ok(
+                ApiResponse.<InventoryResponseDto>builder()
+                        .success(true)
+                        .message("Inventory fetched successfully")
+                        .data(inventoryService.getInventoryByBatchNumber(batchNumber))
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
     @PutMapping("/{id}")
     @Operation(summary = "Update inventory item")
     public ResponseEntity<ApiResponse<InventoryResponseDto>>

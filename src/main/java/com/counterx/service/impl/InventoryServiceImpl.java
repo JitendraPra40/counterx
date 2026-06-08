@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -156,6 +157,17 @@ public class InventoryServiceImpl implements InventoryService {
         return mapToResponse(inventory);
     }
 
+    // Find the item using batch number
+    @Override
+    public InventoryResponseDto getInventoryByBatchNumber(String batchNumber){
+        Inventory byBatchNumber =
+                inventoryRepository
+                        .findByBatchNumberAndDeletedFalse(batchNumber)
+                        .orElseThrow(()->
+                                new RuntimeException("Data not found with batch number" + batchNumber));
+        return mapToResponse(byBatchNumber);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public List<InventoryResponseDto> getAllInventory() {
@@ -166,6 +178,7 @@ public class InventoryServiceImpl implements InventoryService {
                 .map(this::mapToResponse)
                 .toList();
     }
+
 
     @Override
     public InventoryResponseDto addStock(

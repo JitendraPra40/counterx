@@ -21,11 +21,14 @@ public interface InventoryService {
             Long inventoryId
     );
 
+    InventoryResponseDto getInventoryByBatchNumber(String batchNumber);
+
     List<InventoryResponseDto> getAllInventory();
 
     InventoryResponseDto addStock(
             StockAddRequestDto requestDto
     );
+
 
     InventoryResponseDto reduceStock(
             StockReduceRequestDto requestDto
