@@ -57,7 +57,7 @@ public class InventoryController {
         );
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     @Operation(summary = "Get inventory item by ID")
     public ResponseEntity<ApiResponse<InventoryResponseDto>>
     getInventoryById(
