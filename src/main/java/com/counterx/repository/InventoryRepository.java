@@ -36,7 +36,9 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     /**
      * Check duplicate batch number
      */
-    boolean existsByBatchNumberAndDeletedFalse(String batchNumber);
+    boolean existsByItemNameAndBatchNumberAndDeletedFalse(
+            String itemName,
+            String batchNumber);
 
     /**
      * Find inventory by category

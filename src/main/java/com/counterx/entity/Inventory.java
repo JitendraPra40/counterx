@@ -52,7 +52,7 @@ public class Inventory {
     @Column(name = "price_per_unit", nullable = false, precision = 12, scale = 2)
     private BigDecimal pricePerUnit;
 
-    @Column(name = "batch_number", nullable = false, unique = true, length = 100)
+    @Column(name = "batch_number", nullable = false, length = 100)
     private String batchNumber;
 
     @Column(name = "expiry_date")

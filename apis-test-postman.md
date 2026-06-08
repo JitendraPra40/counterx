@@ -27,7 +27,7 @@ Password: check console log: "Using generated security password: ..."
   "availableStock": 25.5,
   "minimumStock": 5,
   "pricePerUnit": 40,
-  "batchNumber": "TOM-BATCH-001",
+  "batchNumber": "B001",
   "expiryDate": "2026-06-20",
   "receivedDate": "2026-06-02"
 }
@@ -51,7 +51,7 @@ No body.
   "availableStock": 30,
   "minimumStock": 6,
   "pricePerUnit": 45,
-  "batchNumber": "TOM-BATCH-001",
+  "batchNumber": "B001",
   "expiryDate": "2026-06-25",
   "receivedDate": "2026-06-02"
 }
