@@ -21,10 +21,6 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
-    // ==================================================
-    // Inventory APIs
-    // ==================================================
-
     @PostMapping
     @Operation(summary = "Create inventory item")
     public ResponseEntity<ApiResponse<InventoryResponseDto>>
