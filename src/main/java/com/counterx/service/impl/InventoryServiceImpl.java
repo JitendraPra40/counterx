@@ -34,12 +34,19 @@ public class InventoryServiceImpl implements InventoryService {
 
         log.info("Creating inventory item : {}", dto.getItemName());
 
-        if (inventoryRepository.existsByBatchNumberAndDeletedFalse(
-                dto.getBatchNumber())) {
+        if (inventoryRepository
+                .existsByItemNameAndBatchNumberAndDeletedFalse(
+                        dto.getItemName(),
+                        dto.getBatchNumber())) {
 
             throw new IllegalArgumentException(
-                    "Batch number already exists");
+                    String.format(
+                            "Inventory already exists for item '%s' with batch '%s'",
+                            dto.getItemName(),
+                            dto.getBatchNumber()));
         }
+
+        // save logic
 
         Inventory inventory = Inventory.builder()
                 .itemName(dto.getItemName())
