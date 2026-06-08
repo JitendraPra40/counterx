@@ -74,7 +74,7 @@ public class InventoryController {
         );
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/id/{id}")
     @Operation(summary = "Update inventory item")
     public ResponseEntity<ApiResponse<InventoryResponseDto>>
     updateInventory(
