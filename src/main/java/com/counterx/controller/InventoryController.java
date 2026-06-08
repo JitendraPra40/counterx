@@ -61,7 +61,7 @@ public class InventoryController {
         );
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     @Operation(summary = "Get inventory item by ID")
     public ResponseEntity<ApiResponse<InventoryResponseDto>>
     getInventoryById(
@@ -73,6 +73,20 @@ public class InventoryController {
                         .message("Inventory fetched successfully")
                         .data(
                                 inventoryService.getInventoryById(id))
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
+    @GetMapping("/batch/{batchNumber}")
+    @Operation(summary = "get the items by batchNumber")
+    public ResponseEntity<ApiResponse<List<InventoryResponseDto>>> getInventoryByBatch(
+            @PathVariable String batchNumber){
+        return ResponseEntity.ok(
+                ApiResponse.<List<InventoryResponseDto>>builder()
+                        .success(true)
+                        .message("Inventory fetched successfully")
+                        .data(inventoryService.getInventoryByBatchNumber(batchNumber))
                         .timestamp(LocalDateTime.now())
                         .build()
         );

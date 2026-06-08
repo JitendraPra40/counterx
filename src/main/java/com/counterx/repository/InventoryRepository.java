@@ -31,7 +31,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     /**
      * Find inventory by exact batch number
      */
-    Optional<Inventory> findByBatchNumberAndDeletedFalse(String batchNumber);
+    List<Inventory> findByBatchNumberAndDeletedFalse(String batchNumber);
 
     /**
      * Check duplicate batch number
