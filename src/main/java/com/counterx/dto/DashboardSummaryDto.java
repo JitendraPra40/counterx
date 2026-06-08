@@ -1,8 +1,12 @@
 package com.counterx.dto;
 
+import com.counterx.enums.Category;
+import com.counterx.enums.UnitType;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -11,11 +15,31 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class DashboardSummaryDto {
 
+    private Long inventoryId;
+
+    private String itemName;
+
+    private Category category;
+
+    private UnitType unitType;
+
+    private BigDecimal availableStock;
+
+    private BigDecimal pricePerUnit;
+
     private BigDecimal currentInventoryValue;
 
-    private Long lowStockCount;
+    private LocalDate receivedDate;
 
-    private Long outOfStockCount;
+    private Boolean deleted;
 
-    private Long expiringProductsCount;
+    private LocalDateTime createdAt;
+
+    private String createdBy;
+
+    private LocalDateTime updatedAt;
+
+    private String updatedBy;
+
+
 }

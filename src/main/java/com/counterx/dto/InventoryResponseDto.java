@@ -1,7 +1,6 @@
 package com.counterx.dto;
 
 import com.counterx.enums.Category;
-import com.counterx.enums.StockStatus;
 import com.counterx.enums.UnitType;
 import lombok.*;
 
@@ -26,21 +25,11 @@ public class InventoryResponseDto {
 
     private BigDecimal availableStock;
 
-    private BigDecimal minimumStock;
-
     private BigDecimal pricePerUnit;
-
-    private String batchNumber;
-
-    private LocalDate expiryDate;
 
     private LocalDate receivedDate;
 
-    private StockStatus stockStatus;
-
     private Boolean deleted;
-
-    private Long version;
 
     private LocalDateTime createdAt;
 

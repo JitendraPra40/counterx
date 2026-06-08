@@ -21,9 +21,9 @@ public class InventoryDashboardController {
 
     @GetMapping("/summary")
     @Operation(summary = "Get inventory dashboard summary")
-    public ApiResponse<DashboardSummaryDto> summary() {
+    public ApiResponse<List<DashboardSummaryDto>> summary() {
 
-        return ApiResponse.<DashboardSummaryDto>builder()
+        return ApiResponse.<List<DashboardSummaryDto>>builder()
                 .success(true)
                 .message("Dashboard summary fetched")
                 .data(
@@ -33,67 +33,4 @@ public class InventoryDashboardController {
                 .build();
     }
 
-    @GetMapping("/daily-consumption")
-    @Operation(summary = "Get daily consumption")
-    public ApiResponse<List<ConsumptionReportDto>>
-    dailyConsumption() {
-
-        return ApiResponse
-                .<List<ConsumptionReportDto>>builder()
-                .success(true)
-                .message("Daily consumption fetched")
-                .data(
-                        dashboardService
-                                .getDailyConsumption())
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
-
-    @GetMapping("/weekly-consumption")
-    @Operation(summary = "Get weekly consumption")
-    public ApiResponse<List<ConsumptionReportDto>>
-    weeklyConsumption() {
-
-        return ApiResponse
-                .<List<ConsumptionReportDto>>builder()
-                .success(true)
-                .message("Weekly consumption fetched")
-                .data(
-                        dashboardService
-                                .getWeeklyConsumption())
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
-
-    @GetMapping("/monthly-consumption")
-    @Operation(summary = "Get monthly consumption")
-    public ApiResponse<List<ConsumptionReportDto>>
-    monthlyConsumption() {
-
-        return ApiResponse
-                .<List<ConsumptionReportDto>>builder()
-                .success(true)
-                .message("Monthly consumption fetched")
-                .data(
-                        dashboardService
-                                .getMonthlyConsumption())
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
-
-    @GetMapping("/top-consumed-items")
-    @Operation(summary = "Get top consumed items")
-    public ApiResponse<List<TopConsumedItemDto>>
-    topConsumedItems() {
-
-        return ApiResponse
-                .<List<TopConsumedItemDto>>builder()
-                .success(true)
-                .message("Top consumed items fetched")
-                .data(
-                        dashboardService
-                                .getTopConsumedItems())
-                .timestamp(LocalDateTime.now())
-                .build();
-    }
 }

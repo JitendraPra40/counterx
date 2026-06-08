@@ -29,20 +29,16 @@ public class InventoryRequestDto {
     @PositiveOrZero(message = "Available stock cannot be negative")
     private BigDecimal availableStock;
 
-    @NotNull(message = "Minimum stock is required")
-    @PositiveOrZero(message = "Minimum stock cannot be negative")
-    private BigDecimal minimumStock;
-
     @NotNull(message = "Price per unit is required")
     @Positive(message = "Price per unit must be greater than zero")
     private BigDecimal pricePerUnit;
 
-    @NotBlank(message = "Batch number is required")
-    @Size(max = 100, message = "Batch number cannot exceed 100 characters")
-    private String batchNumber;
-
-    private LocalDate expiryDate;
-
     @NotNull(message = "Received date is required")
     private LocalDate receivedDate;
+
+    @Size(min = 2, max = 255, message = "Item name must be between 2 and 255 characters")
+    private String createdBy;
+
+    @Size(min = 2, max = 255, message = "Item name must be between 2 and 255 characters")
+    private String updatedBy;
 }

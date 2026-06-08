@@ -1,50 +1,122 @@
 package com.counterx.service;
 
 import com.counterx.dto.*;
+import com.counterx.entity.Inventory;
+import com.counterx.repository.InventoryRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface InventoryService {
+@Service
+@RequiredArgsConstructor
+public class InventoryService {
 
-    InventoryResponseDto createInventory(
-            InventoryRequestDto requestDto
-    );
+    private final InventoryRepository inventoryRepository;
 
-    InventoryResponseDto updateInventory(
+    public InventoryResponseDto createInventory(
+            InventoryRequestDto dto) {
+
+        Inventory inventory = Inventory.builder()
+                .itemName(dto.getItemName())
+                .category(dto.getCategory())
+                .unitType(dto.getUnitType())
+                .availableStock(dto.getAvailableStock())
+                .pricePerUnit(dto.getPricePerUnit())
+                .receivedDate(dto.getReceivedDate())
+                .createdBy(dto.getCreatedBy())
+                .updatedBy(dto.getUpdatedBy())
+                .build();
+
+        Inventory saved =
+                inventoryRepository.save(inventory);
+
+        return mapToResponse(saved);
+    }
+
+    public InventoryResponseDto updateInventory(
             Long inventoryId,
-            InventoryRequestDto requestDto
-    );
+            InventoryRequestDto dto) {
 
-    void deleteInventory(Long inventoryId);
+        Inventory inventory =
+                inventoryRepository
+                        .findByInventoryIdAndDeletedFalse(
+                                inventoryId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Inventory not found"));
 
-    InventoryResponseDto getInventoryById(
-            Long inventoryId
-    );
+        inventory.setItemName(dto.getItemName());
+        inventory.setCategory(dto.getCategory());
+        inventory.setUnitType(dto.getUnitType());
+        inventory.setAvailableStock(dto.getAvailableStock());
+        inventory.setPricePerUnit(dto.getPricePerUnit());
+        inventory.setReceivedDate(dto.getReceivedDate());
+        inventory.setUpdatedBy(dto.getUpdatedBy());
 
-    List<InventoryResponseDto> getInventoryByBatchNumber(String batchNumber);
+        Inventory saved =
+                inventoryRepository.save(inventory);
 
-    List<InventoryResponseDto> getAllInventory();
+        return mapToResponse(saved);
+    }
 
-    InventoryResponseDto addStock(
-            StockAddRequestDto requestDto
-    );
+    public void deleteInventory(
+            Long inventoryId) {
 
+        Inventory inventory =
+                inventoryRepository
+                        .findByInventoryIdAndDeletedFalse(
+                                inventoryId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Inventory not found"));
 
-    InventoryResponseDto reduceStock(
-            StockReduceRequestDto requestDto
-    );
+        inventory.setDeleted(true);
 
-    List<InventoryResponseDto> getLowStockItems();
+        inventoryRepository.save(inventory);
 
-    List<InventoryResponseDto> getExpiringItems();
+    }
 
-    void saveInventoryHistory(
-            Long inventoryId,
-            String actionType,
-            String remarks
-    );
+    public InventoryResponseDto getInventoryById(
+            Long inventoryId) {
 
-    List<InventoryHistoryResponseDto> getInventoryHistory(Long inventoryId);
+        Inventory inventory =
+                inventoryRepository
+                        .findByInventoryIdAndDeletedFalse(
+                                inventoryId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Inventory not found"));
 
-    List<InventoryHistoryResponseDto> getAllInventoryHistory();
+        return mapToResponse(inventory);
+    }
+
+    public List<InventoryResponseDto> getAllInventory() {
+
+        return inventoryRepository
+                .findByDeletedFalse()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    private InventoryResponseDto mapToResponse(
+            Inventory inventory) {
+
+        return InventoryResponseDto.builder()
+                .inventoryId(inventory.getInventoryId())
+                .itemName(inventory.getItemName())
+                .category(inventory.getCategory())
+                .unitType(inventory.getUnitType())
+                .availableStock(inventory.getAvailableStock())
+                .pricePerUnit(inventory.getPricePerUnit())
+                .receivedDate(inventory.getReceivedDate())
+                .deleted(inventory.getDeleted())
+                .createdAt(inventory.getCreatedAt())
+                .createdBy(inventory.getCreatedBy())
+                .updatedAt(inventory.getUpdatedAt())
+                .updatedBy(inventory.getUpdatedBy())
+                .build();
+    }
+
 }
