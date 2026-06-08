@@ -21,7 +21,7 @@ public interface InventoryService {
             Long inventoryId
     );
 
-    InventoryResponseDto getInventoryByBatchNumber(String batchNumber);
+    List<InventoryResponseDto> getInventoryByBatchNumber(String batchNumber);
 
     List<InventoryResponseDto> getAllInventory();
 

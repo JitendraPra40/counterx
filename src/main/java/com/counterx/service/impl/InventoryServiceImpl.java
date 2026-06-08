@@ -166,13 +166,17 @@ public class InventoryServiceImpl implements InventoryService {
 
     // Find the item using batch number
     @Override
-    public InventoryResponseDto getInventoryByBatchNumber(String batchNumber){
-        Inventory byBatchNumber =
+    public List<InventoryResponseDto> getInventoryByBatchNumber(String batchNumber){
+        List<Inventory> inventories =
                 inventoryRepository
-                        .findByBatchNumberAndDeletedFalse(batchNumber)
-                        .orElseThrow(()->
-                                new RuntimeException("Data not found with batch number" + batchNumber));
-        return mapToResponse(byBatchNumber);
+                        .findByBatchNumberAndDeletedFalse(batchNumber);
+        if (inventories.isEmpty()) {
+            throw new RuntimeException("Data not found with batch number " + batchNumber);
+        }
+
+        return inventories.stream()
+                .map(inventory -> mapToResponse(inventory))
+                .toList();
     }
 
     @Override
